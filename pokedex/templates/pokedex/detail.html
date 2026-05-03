@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ pokemon.name }} - Pokedex{% endblock %}
+
+{% block content %}
+<div class="pokemon-detail">
+    <a href="{% url 'pokedex:index' %}" class="back-link">← <span data-i18n="back_to_pokedex">Back to Pokedex</span></a>
+    
+    <div class="evolution-section">
+        <h2 data-i18n="evolution_line">Evolution Line</h2>
+        <div class="evolution-chain">
+            {% for evo in evolution_line %}
+            <div class="evolution-card {% if evo.pokedex_number == pokemon.pokedex_number %}active{% endif %}">
+                <a href="{% url 'pokedex:detail' evo.pokedex_number %}">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{ evo.pokedex_number }}.png" 
+                         alt="{{ evo.name }}">
+                    <p>{{ evo.name }}</p>
+                    <span class="evo-number">#{{ evo.pokedex_number }}</span>
+                </a>
+            </div>
+            {% if not forloop.last %}
+            <div class="evolution-arrow">→</div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="main-card">
+        <div class="card-left">
+            <div class="pokemon-image">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{ pokemon.pokedex_number }}.png" 
+                     alt="{{ pokemon.name }}" 
+                     onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
+            </div>
+        </div>
+        
+        <div class="card-right">
+            <div class="pokemon-header">
+                <h1>{{ pokemon.name }}</h1>
+                <span class="pokemon-number">#{{ pokemon.pokedex_number }}</span>
+            </div>
+            
+            <div class="pokemon-types">
+                <span class="type type-{{ pokemon.type1 }}" data-type-name="{{ pokemon.type1 }}">{{ pokemon.type1 }}</span>
+                {% if pokemon.type2 %}
+                <span class="type type-{{ pokemon.type2 }}" data-type-name="{{ pokemon.type2 }}">{{ pokemon.type2 }}</span>
+                {% endif %}
+            </div>
+            
+            <div class="pokemon-info">
+                <div class="info-item">
+                    <span class="label" data-i18n="classification">Classification:</span>
+                    <span class="value">{{ pokemon.classfication }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label" data-i18n="height">Height:</span>
+                    <span class="value">{{ pokemon.height_m }} m</span>
+                </div>
+                <div class="info-item">
+                    <span class="label" data-i18n="weight">Weight:</span>
+                    <span class="value">{{ pokemon.weight_kg }} kg</span>
+                </div>
+                <div class="info-item">
+                    <span class="label" data-i18n="capture_rate">Capture Rate:</span>
+                    <span class="value">{{ pokemon.capture_rate }}%</span>
+                </div>
+            </div>
+            
+            <div class="pokemon-stats">
+                <h3 data-i18n="stats">Stats</h3>
+                <div class="stats-grid">
+                    {% for label, value in stats.items %}
+                    <div class="stat-bar">
+                        <div class="stat-name">{{ label }}</div>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar-fill" style="width: {% widthratio value 255 100 %}%"></div>
+                            <span class="stat-number">{{ value }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="stat-bar total">
+                        <div class="stat-name" data-i18n="total">Total</div>
+                        <div class="stat-total">{{ pokemon.base_total }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

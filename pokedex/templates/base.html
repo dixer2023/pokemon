@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pokedex{% endblock %}</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('ui-theme') || 'light');</script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=5">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="topbar">
+                <h1><a href="{% url 'pokedex:index' %}" data-i18n="brand">Pokedex</a></h1>
+                <div class="topbar-controls">
+                    <label for="language-select" class="sr-only" data-i18n="language">Language</label>
+                    <select id="language-select" aria-label="Language">
+                        <option value="en">English</option>
+                        <option value="uk">Українська</option>
+                    </select>
+                    <button id="theme-toggle" type="button" data-i18n="theme_dark">Dark theme</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 <span data-i18n="brand">Pokemon Pokedex</span></p>
+    </footer>
+    <script src="{% static 'js/app.js' %}?v=5"></script>
+</body>
+</html>

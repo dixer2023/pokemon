@@ -1,0 +1,80 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Pokedex{% endblock %}
+
+{% block content %}
+<div class="search-bar">
+    <input
+        type="text"
+        id="search-name"
+        placeholder="Search by name..."
+        data-i18n-placeholder="search_name"
+        autocomplete="off"
+    >
+    <select id="search-type">
+        <option value="" data-i18n="all_types">All types</option>
+        <option value="bug">Bug</option>
+        <option value="dark">Dark</option>
+        <option value="dragon">Dragon</option>
+        <option value="electric">Electric</option>
+        <option value="fairy">Fairy</option>
+        <option value="fighting">Fighting</option>
+        <option value="fire">Fire</option>
+        <option value="flying">Flying</option>
+        <option value="ghost">Ghost</option>
+        <option value="grass">Grass</option>
+        <option value="ground">Ground</option>
+        <option value="ice">Ice</option>
+        <option value="normal">Normal</option>
+        <option value="poison">Poison</option>
+        <option value="psychic">Psychic</option>
+        <option value="rock">Rock</option>
+        <option value="steel">Steel</option>
+        <option value="water">Water</option>
+    </select>
+    <span id="search-count" class="search-count"></span>
+</div>
+
+<div id="no-results" class="no-results" style="display:none" data-i18n="no_results">No Pokemon found</div>
+
+<div class="pokemon-grid" id="pokemon-grid">
+    {% for pokemon in pokemon_list %}
+    <div class="pokemon-card"
+         data-name="{{ pokemon.name|lower }}"
+         data-type1="{{ pokemon.type1|lower }}"
+         data-type2="{{ pokemon.type2|lower }}">
+        <a href="{% url 'pokedex:detail' pokemon.pokedex_number %}">
+            <div class="card-header">
+                <h3>{{ pokemon.name }}</h3>
+                <span class="card-number">#{{ pokemon.pokedex_number }}</span>
+            </div>
+            <div class="card-image">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{ pokemon.pokedex_number }}.png"
+                     alt="{{ pokemon.name }}"
+                     onerror="this.src='https://via.placeholder.com/200x200?text=No+Image'">
+            </div>
+            <div class="card-types">
+                <span class="type type-{{ pokemon.type1 }}" data-type-name="{{ pokemon.type1 }}">{{ pokemon.type1 }}</span>
+                {% if pokemon.type2 %}
+                <span class="type type-{{ pokemon.type2 }}" data-type-name="{{ pokemon.type2 }}">{{ pokemon.type2 }}</span>
+                {% endif %}
+            </div>
+            <div class="card-stats">
+                <div class="stat">
+                    <span class="stat-label">HP</span>
+                    <span class="stat-value">{{ pokemon.hp }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">ATK</span>
+                    <span class="stat-value">{{ pokemon.attack }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">DEF</span>
+                    <span class="stat-value">{{ pokemon.defense }}</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
