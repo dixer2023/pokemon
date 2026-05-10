@@ -138,7 +138,8 @@ header h1 a:hover {
 }
 
 #language-select,
-#theme-toggle {
+#theme-toggle,
+#download-library {
     border: 1px solid rgba(255, 255, 255, 0.5);
     background: rgba(255, 255, 255, 0.18);
     color: white;
@@ -147,6 +148,12 @@ header h1 a:hover {
     font-size: 14px;
     cursor: pointer;
     transition: background var(--transition);
+}
+
+#download-library {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
 }
 
 #language-select option {
@@ -160,7 +167,8 @@ header h1 a:hover {
 }
 
 #theme-toggle:hover,
-#language-select:hover {
+#language-select:hover,
+#download-library:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
@@ -612,7 +620,8 @@ footer {
     }
 
     #language-select,
-    #theme-toggle {
+    #theme-toggle,
+    #download-library {
         width: 100%;
     }
 

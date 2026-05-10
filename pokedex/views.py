@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.http import FileResponse, Http404
+from django.conf import settings
 from .models import Pokemon
 
 
@@ -29,3 +30,17 @@ def pokemon_detail(request, pk):
         'stats': stats,
     }
     return render(request, 'pokedex/detail.html', context)
+
+
+def download_library(request):
+    """Download the raw Pokemon library CSV file."""
+    csv_path = settings.BASE_DIR / 'pokemon.csv'
+    if not csv_path.exists():
+        raise Http404('Pokemon library file not found')
+
+    return FileResponse(
+        open(csv_path, 'rb'),
+        as_attachment=True,
+        filename='pokemon-library.csv',
+        content_type='text/csv',
+    )

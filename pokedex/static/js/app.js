@@ -3,6 +3,7 @@
         en: {
             brand: 'Pokedex',
             language: 'Language',
+            download_library: 'Download library',
             theme_dark: 'Dark theme',
             theme_light: 'Light theme',
             back_to_pokedex: 'Back to Pokedex',
@@ -40,6 +41,7 @@
         uk: {
             brand: 'Покедекс',
             language: 'Мова',
+            download_library: 'Завантажити бібліотеку',
             theme_dark: 'Темна тема',
             theme_light: 'Світла тема',
             back_to_pokedex: 'Назад до Покедексу',
